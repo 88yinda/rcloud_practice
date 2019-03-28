@@ -1,0 +1,58 @@
+# Homework 1 for R
+pima <- read.csv(rcloud.home("pima.csv"))
+str(pima)
+# Find mean insulin amount for patients
+# head(pima, n=5)
+summary(pima$insulin)
+print("Mean insulin amount is ") 
+mean(pima$insulin, na.rm = TRUE)
+
+# Find Q3 of BMI
+summary(pima$bmi)
+print("3rd quarfile of BMI is ") 
+quantile(pima$bmi, 0.75)
+# Find min value of glucose, diastolic BP, triceps, insulin and BMI
+min(pima$glucose)
+min(pima$diastolic)
+min(pima$triceps)
+min(pima$insulin)
+min(pima$bmi)
+
+
+# Clean 0 data with NA
+pima$glucose[pima$glucose == 0] <- NA
+pima$diastolic[pima$diastolic == 0] <- NA
+pima$triceps[pima$triceps == 0] <- NA
+pima$insulin[pima$insulin == 0] <- NA
+pima$bmi[pima$bmi == 0] <- NA
+
+#pima <- pima[na.rm=T]
+
+min(pima$glucose, na.rm = T)
+min(pima$diastolic, na.rm = T)
+min(pima$triceps, na.rm = T)
+min(pima$insulin, na.rm = T)
+min(pima$bmi, na.rm = T)
+
+# Summarize data, find new mean insulin and Q3 BMI 
+summary(pima$insulin, na.rm = T)
+summary(pima$bmi, na.rm = T)
+# 2. change 0, 1 to No and Yes in Test column
+pima$test[pima$test == "0"] <- "No"
+pima$test[pima$test == "1"] <- "Yes"
+# change Test column into Factor
+pima$test <- as.factor(pima$test) #seems did not make difference
+str(pima)
+# determine how many has diabetes using table
+print("# of patients have diabetes ") 
+table(pima$test)
+
+# 3  plot glucose against diastolic blood pressure (use the plot function)
+library(MASS)
+plot(glucose~diastolic, pima)
+# scatterplot of glucose against diastolic
+library(ggplot2)
+scatterplot(diastolic, glucose, data=pima)
+#  use the cor function, just pass in the two columns. What is the co-efficient?
+r <- cor(pima$diastolic, pima$glucose, use="complete.obs")
+r
